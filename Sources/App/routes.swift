@@ -9,7 +9,7 @@ import Vapor
 
 func routes(_ app: Application) throws {
     let usersHostname: String
-    let acronymsHostname: String
+    let songsHostname: String
 
     if let users = Environment.get("USERS_HOSTNAME") {
         usersHostname = users
@@ -17,16 +17,16 @@ func routes(_ app: Application) throws {
         usersHostname = "localhost"
     }
 
-    if let acronyms = Environment.get("ACRONYMS_HOSTNAME") {
-        acronymsHostname = acronyms
+    if let songs = Environment.get("SONGS_HOSTNAME") {
+        songsHostname = songs
     } else {
-        acronymsHostname = "localhost"
+        songsHostname = "localhost"
     }
 
     try app.register(collection: UsersController(
         userServiceHostname: usersHostname,
-        songsServiceHostname: acronymsHostname))
+        songsServiceHostname: songsHostname))
     try app.register(collection: SongsController(
-        songsServiceHostname: acronymsHostname,
+        songsServiceHostname: songsHostname,
         userServiceHostname: usersHostname))
 }
